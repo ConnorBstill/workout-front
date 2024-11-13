@@ -6,4 +6,4 @@ const Button = ({ children, variant }: ButtonProps) => {
   );
 }
 
-export default Button;
+export { Button };

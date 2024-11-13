@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Button from '../../components/common/Button';
+import { Button, TextInput } from '../../components/common';
 
 import classes from './LoginPageStyles.module.css';
 
@@ -17,26 +17,30 @@ const LoginPage = () => {
     <div className={classes.container}>
       <h2>Login</h2>
       <form className={classes.container}>
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
+        <div className={classes['input-container']}>
+          {/* <label htmlFor="username">Username</label> */}
+          <TextInput
             onChange={(e) => setUsername(e.target.value)}
+            type="text"
+            color="primary"
+            id="username"
+            variant="filled"
+            label="Filled"
+            value={username}
             required
-            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
           />
         </div>
-        <div style={{ marginBottom: '15px' }}>
-          <label htmlFor="password">Password</label>
-          <input
+        <div className={classes['input-container']}>
+          {/* <label htmlFor="password">Password</label> */}
+          <TextInput
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
+            color="primary"
+            variant="filled"
+            label="Filled"
             id="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
             required
-            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
           />
         </div>
 

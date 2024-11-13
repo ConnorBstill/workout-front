@@ -1,10 +1,19 @@
-import TextField, { BaseTextFieldProps } from '@mui/material/TextField';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
 
-const TextInput = ({ variant }: BaseTextFieldProps)  => {
+const TextInput = ({ 
+  variant,
+  color,
+  label,
+  onChange
+}: TextFieldProps)  => {
 
   return (
-    <TextField variant={variant}></TextField>
+    <TextField
+      onChange={onChange} 
+      variant={variant}
+      label={label}
+      color={color}></TextField>
   )
 }
 
-export default TextInput;
+export { TextInput };
