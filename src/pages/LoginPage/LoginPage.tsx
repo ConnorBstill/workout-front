@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { Button, TextInput } from '../../components/common';
+import { Typography } from '@mui/material';
 
 import classes from './LoginPageStyles.module.css';
 
@@ -15,29 +16,29 @@ const LoginPage = () => {
 
   return (
     <div className={classes.container}>
-      <h2>Login</h2>
+      <Typography variant="h3" color="primary">Login</Typography>
+
       <form className={classes.container}>
         <div className={classes['input-container']}>
-          {/* <label htmlFor="username">Username</label> */}
           <TextInput
             onChange={(e) => setUsername(e.target.value)}
             type="text"
             color="primary"
-            id="username"
+            id="email"
             variant="filled"
-            label="Filled"
+            label="Email"
             value={username}
             required
           />
         </div>
+
         <div className={classes['input-container']}>
-          {/* <label htmlFor="password">Password</label> */}
           <TextInput
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             color="primary"
             variant="filled"
-            label="Filled"
+            label="Password"
             id="password"
             value={password}
             required

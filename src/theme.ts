@@ -1,16 +1,17 @@
 import { createTheme } from '@mui/material/styles';
 import { blue, red } from '@mui/material/colors';
+import { PRIMARY_COLOR, SECONDARY_COLOR, TEXT_PRIMARY_COLOR } from './colors'
 
 const theme = createTheme({
   cssVariables: true,
   palette: {
     text: {
-      primary: '#fff',
-      secondary: '#fc3f28',
+      primary: TEXT_PRIMARY_COLOR,
+      secondary: TEXT_PRIMARY_COLOR,
       // disabled: string;
     },
     primary: {
-      main: '#fc3f28',
+      main: PRIMARY_COLOR,
       // light: '#fd6049',
       // dark: '#a12a1b',
       // contrastText: '#fff'
