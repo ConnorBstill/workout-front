@@ -1,4 +1,4 @@
-import { getJwt } from '../ApiServices/JwtService';
+import { getJwt } from './JwtService';
 
 export const get = async (url: string, headers?: HeadersInit) => {
   try {
@@ -19,7 +19,6 @@ export const get = async (url: string, headers?: HeadersInit) => {
 
 export const post = async (url: string, body: any, headers?: HeadersInit): Promise<any> => {
   try {
-    console.log(`Bearer ${getJwt()}`)
     const res = await fetch(url, {
       method: 'POST',
       headers: { 
@@ -27,7 +26,6 @@ export const post = async (url: string, body: any, headers?: HeadersInit): Promi
         Authorization: `Bearer ${getJwt()}`,
         ...headers 
       },
-      // credentials: 'include',
       body: JSON.stringify(body)
     });
 

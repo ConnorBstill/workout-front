@@ -1,8 +1,18 @@
 import MuiButton, { ButtonProps } from '@mui/material/Button';
 
-const Button = ({ children, variant }: ButtonProps) => {
+const Button = ({ 
+  onClick, 
+  children, 
+  variant,
+  className
+}: ButtonProps) => {
   return (
-    <MuiButton variant={variant}>{children}</MuiButton>
+    <MuiButton 
+      onClick={onClick} 
+      variant={variant}
+      className={className}>
+        {children}
+    </MuiButton>
   );
 }
 

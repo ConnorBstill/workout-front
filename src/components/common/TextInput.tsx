@@ -1,10 +1,11 @@
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 
 const TextInput = ({ 
+  onChange,
   variant,
   color,
   label,
-  onChange
+  type
 }: TextFieldProps)  => {
 
   return (
@@ -12,7 +13,8 @@ const TextInput = ({
       onChange={onChange} 
       variant={variant}
       label={label}
-      color={color}></TextField>
+      color={color}
+      type={type}></TextField>
   )
 }
 
