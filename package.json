@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "pretty": "prettier --write --single-quote '**/*.ts' '**/*.tsx' '!dist/*' --print-width 100 && prettier --write --single-quote '**/*.css' '!dist/*'"
+    "pretty": "prettier --write --single-quote '**/*.ts' '**/*.tsx' '!dist/*' --print-width 110 && prettier --write --single-quote '**/*.css' '!dist/*'"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",

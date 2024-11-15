@@ -1,0 +1,25 @@
+/* @import '../../../colors.scss'; */
+
+.navbar-container {
+  align-items: center;
+  background-color: white;
+  border-bottom: 1.5px solid red;
+  display: flex;
+  height: 56px;
+  justify-content: flex-end;
+  padding-right: 15px;
+  position: fixed;
+  right: 0;
+  width: 100%;
+}
+
+.logout-button {
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  font-size: large;
+}
+
+.logout-button:hover {
+  cursor: pointer;
+}

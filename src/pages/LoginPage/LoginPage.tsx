@@ -14,8 +14,9 @@ const LoginPage = () => {
   const mutation = useMutation({
     mutationFn: logInUser,
     onSuccess: (res) => {
+      console.log('handleLoginClick')
       setJwt(res.data.jwt);
-      navigate('explore');
+      navigate('/main/explore');
     },
   });
 
@@ -67,9 +68,9 @@ const LoginPage = () => {
 
         <Typography variant="body2" color="textPrimary">
           Don't have an account yet? Click{' '}
-          <Link to="register" id={classes['register-link']}>
+          <Link to="/" id={classes['register-link']}>
             here
-          </Link>{' '}
+          </Link>
           to register
         </Typography>
       </form>

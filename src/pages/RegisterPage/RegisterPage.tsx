@@ -63,7 +63,7 @@ const LoginPage = () => {
 
         <Typography variant="body2" color="textPrimary">
           Already have an account? Click{' '}
-          <Link to="/" id={classes['login-link']}>
+          <Link to="/login" id={classes['login-link']}>
             here
           </Link>{' '}
           to log in
