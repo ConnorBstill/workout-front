@@ -1,10 +1,8 @@
-import {
-  Typography,
-} from '@mui/material';
+import { Typography } from '@mui/material';
 
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
-const Logo = ({ display }: { display: { xs: string; md: string; }}) => {
+const Logo = ({ display }: { display: { xs: string; md: string } }) => {
   return (
     <>
       <FitnessCenterIcon sx={{ display, mr: 1 }} />
@@ -26,7 +24,7 @@ const Logo = ({ display }: { display: { xs: string; md: string; }}) => {
         GAINTRACK
       </Typography>
     </>
-  )
-}
+  );
+};
 
 export { Logo };

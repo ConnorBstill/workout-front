@@ -14,7 +14,7 @@ const LoginPage = () => {
   const mutation = useMutation({
     mutationFn: logInUser,
     onSuccess: (res) => {
-      console.log('handleLoginClick')
+      console.log('handleLoginClick');
       setJwt(res.data.jwt);
       navigate('/main/explore');
     },

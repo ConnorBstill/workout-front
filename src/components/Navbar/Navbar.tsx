@@ -1,21 +1,20 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { 
-  AppBar, 
-  Container, 
-  Toolbar, 
+import {
+  AppBar,
+  Container,
+  Toolbar,
   Typography,
   IconButton,
   Menu,
   MenuItem,
   Tooltip,
-  Box
+  Box,
 } from '@mui/material';
 
 import Avatar from '@mui/material/Avatar';
 import MenuIcon from '@mui/icons-material/Menu';
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
 import { Button, Logo } from '../common/index';
 
@@ -27,7 +26,6 @@ const pages = ['My Workouts', 'Explore'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navbar = () => {
-  // const location = useLocation();
   const navigate = useNavigate();
 
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -48,7 +46,6 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
 
-
   const handleLogoutClick = () => {
     clearJwt();
     navigate('/login');
@@ -57,12 +54,13 @@ const Navbar = () => {
   const renderNavItems = () => {
     return pages.map((page) => (
       <MenuItem key={page} onClick={handleCloseNavMenu}>
-        <Typography color="textPrimary" sx={{ textAlign: 'center' }}>{page}</Typography>
+        <Typography color="textPrimary" sx={{ textAlign: 'center' }}>
+          {page}
+        </Typography>
       </MenuItem>
     ));
-  }
+  };
 
-  // if (location.pathname !== '/' && location.pathname !== '/register') {
   return (
     <AppBar color="secondary" position="static">
       <Container maxWidth="xl">
@@ -96,8 +94,7 @@ const Navbar = () => {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
-
-            {renderNavItems()}
+              {renderNavItems()}
             </Menu>
           </Box>
 
@@ -147,9 +144,6 @@ const Navbar = () => {
       </Container>
     </AppBar>
   );
-  // } else {
-  //   return <></>
-  // }
 };
 
 export default Navbar;
