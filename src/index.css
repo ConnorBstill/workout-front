@@ -6,8 +6,8 @@ body,
 #root {
   background-color: #0e1012;
   color: #a6a7a7;
+  margin: 0 !important;
+  padding: 0 !important;
   height: 100%;
-  margin: 0;
-  padding: 0;
   width: 100%;
 }
