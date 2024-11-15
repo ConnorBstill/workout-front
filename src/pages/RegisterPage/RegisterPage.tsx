@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Button, TextInput } from '../../components/common';
 import { Typography } from '@mui/material';
@@ -25,9 +26,9 @@ const LoginPage = () => {
 
   return (
     <div className={classes.container}>
-      <Typography variant="h3" color="primary">Register</Typography>
+      <Typography variant="h3" color="primary" className="mb-4">Register</Typography>
 
-      <form className={classes.container}>
+      <form className={classes['form-container']}>
         <div className={classes['input-container']}>
           <TextInput
             onChange={(e) => setEmail(e.target.value)}
@@ -54,7 +55,13 @@ const LoginPage = () => {
           />
         </div>
 
-        <Button onClick={handleRegisterClick} variant="contained">Login</Button>
+        <Button onClick={handleRegisterClick} variant="contained" className="mb-4">Login</Button>
+
+        <Typography 
+          variant="body2" 
+          color="textPrimary">
+            Already have an account? Click <Link to="/" id={classes['login-link']}>here</Link> to log in
+        </Typography>
       </form>
     </div>
   );

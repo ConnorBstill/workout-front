@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Button, TextInput } from '../../components/common';
 import { Typography } from '@mui/material';
@@ -8,17 +8,21 @@ import { Typography } from '@mui/material';
 import classes from './LoginPageStyles.module.css';
 
 import { logInUser } from '../../api-services/AuthService';
+import { setJwt } from '../../api-services/JwtService';
 
 const LoginPage = () => {
   const mutation = useMutation({
     mutationFn: logInUser,
     onSuccess: (res) => {
-      console.log('res', res)
+      setJwt(res.data.jwt);
+      navigate('explore');
     }
   });
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
+  const navigate = useNavigate();
 
   const handleLoginClick = () => {
     mutation.mutate({ email, password });
@@ -26,7 +30,7 @@ const LoginPage = () => {
 
   return (
     <div className={classes.container}>
-      <Typography variant="h3" color="primary">Login</Typography>
+      <Typography variant="h3" color="primary" className="mb-6">Login</Typography>
 
       <form className={classes['form-container']}>
         <div className={classes['input-container']}>
@@ -42,7 +46,7 @@ const LoginPage = () => {
           />
         </div>
 
-        <div className={classes['input-container']}>
+        <div className={`${classes['input-container']} mb-6`}>
           <TextInput
             onChange={(e) => setPassword(e.target.value)}
             type="password"
@@ -55,12 +59,12 @@ const LoginPage = () => {
           />
         </div>
 
-        <Button onClick={handleLoginClick} variant="contained" className="mb-4">Login</Button>
+        <Button onClick={handleLoginClick} variant="contained" className="mb-2">Login</Button>
 
         <Typography 
           variant="body2" 
           color="textPrimary">
-            Don't have an account yet? Click <Link to="register">here</Link> to register
+            Don't have an account yet? Click <Link to="register" id={classes['register-link']}>here</Link> to register
         </Typography>
       </form>
     </div>

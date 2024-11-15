@@ -18,3 +18,8 @@
 .input-container {
   margin-bottom: 15px;
 }
+
+#register-link {
+  color: #2424e2;
+  text-decoration: underline;
+}
