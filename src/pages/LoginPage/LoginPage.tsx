@@ -16,7 +16,7 @@ const LoginPage = () => {
     onSuccess: (res) => {
       setJwt(res.data.jwt);
       navigate('explore');
-    }
+    },
   });
 
   const [email, setEmail] = useState<string>('');
@@ -26,11 +26,13 @@ const LoginPage = () => {
 
   const handleLoginClick = () => {
     mutation.mutate({ email, password });
-  }
+  };
 
   return (
     <div className={classes.container}>
-      <Typography variant="h3" color="primary" className="mb-6">Login</Typography>
+      <Typography variant="h3" color="primary" className="mb-6">
+        Login
+      </Typography>
 
       <form className={classes['form-container']}>
         <div className={classes['input-container']}>
@@ -59,12 +61,16 @@ const LoginPage = () => {
           />
         </div>
 
-        <Button onClick={handleLoginClick} variant="contained" className="mb-2">Login</Button>
+        <Button onClick={handleLoginClick} variant="contained" className="mb-2">
+          Login
+        </Button>
 
-        <Typography 
-          variant="body2" 
-          color="textPrimary">
-            Don't have an account yet? Click <Link to="register" id={classes['register-link']}>here</Link> to register
+        <Typography variant="body2" color="textPrimary">
+          Don't have an account yet? Click{' '}
+          <Link to="register" id={classes['register-link']}>
+            here
+          </Link>{' '}
+          to register
         </Typography>
       </form>
     </div>

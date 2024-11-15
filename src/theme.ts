@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 import { blue, red } from '@mui/material/colors';
-import { PRIMARY_COLOR, SECONDARY_COLOR, TEXT_PRIMARY_COLOR } from './colors'
+import { PRIMARY_COLOR, SECONDARY_COLOR, TEXT_PRIMARY_COLOR } from './colors';
 
 const theme = createTheme({
   cssVariables: true,

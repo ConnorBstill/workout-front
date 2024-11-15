@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind utilities;
 
-html, body, #root {
+html,
+body,
+#root {
   background-color: #0e1012;
   color: #a6a7a7;
   height: 100%;
@@ -9,5 +11,3 @@ html, body, #root {
   padding: 0;
   width: 100%;
 }
-
-

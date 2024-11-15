@@ -1,6 +1,6 @@
-export interface Response { 
-  data: any, 
-  error: boolean
+export interface Response {
+  data: any;
+  error: boolean;
 }
 
 export interface User {

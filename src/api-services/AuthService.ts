@@ -9,12 +9,12 @@ export const registerUser = async (user: User): Promise<Response> => {
     return post(`${API_URL}/auth/register`, user);
     // return res.json();
   } catch (err: any) {
-    return { data: [], error: err }
+    return { data: [], error: err };
   }
-}
+};
 
-export const logInUser =  async (user: User): Promise<any> => {
+export const logInUser = async (user: User): Promise<any> => {
   // const res = await fetch(`${API_URL}/authenticate`);
   return post(`${API_URL}/auth/login`, user);
-    // return res.json();
-}
+  // return res.json();
+};

@@ -13,8 +13,8 @@ const LoginPage = () => {
   const mutation = useMutation({
     mutationFn: registerUser,
     onSuccess: (res) => {
-      console.log('res', res)
-    }
+      console.log('res', res);
+    },
   });
 
   const [email, setEmail] = useState<string>('');
@@ -22,11 +22,13 @@ const LoginPage = () => {
 
   const handleRegisterClick = () => {
     mutation.mutate({ email, password });
-  }
+  };
 
   return (
     <div className={classes.container}>
-      <Typography variant="h3" color="primary" className="mb-4">Register</Typography>
+      <Typography variant="h3" color="primary" className="mb-4">
+        Register
+      </Typography>
 
       <form className={classes['form-container']}>
         <div className={classes['input-container']}>
@@ -55,12 +57,16 @@ const LoginPage = () => {
           />
         </div>
 
-        <Button onClick={handleRegisterClick} variant="contained" className="mb-4">Login</Button>
+        <Button onClick={handleRegisterClick} variant="contained" className="mb-4">
+          Login
+        </Button>
 
-        <Typography 
-          variant="body2" 
-          color="textPrimary">
-            Already have an account? Click <Link to="/" id={classes['login-link']}>here</Link> to log in
+        <Typography variant="body2" color="textPrimary">
+          Already have an account? Click{' '}
+          <Link to="/" id={classes['login-link']}>
+            here
+          </Link>{' '}
+          to log in
         </Typography>
       </form>
     </div>

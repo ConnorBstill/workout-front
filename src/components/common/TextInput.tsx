@@ -1,21 +1,15 @@
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 
-const TextInput = ({ 
-  onChange,
-  variant,
-  color,
-  label,
-  type
-}: TextFieldProps)  => {
-
+const TextInput = ({ onChange, variant, color, label, type }: TextFieldProps) => {
   return (
     <TextField
-      onChange={onChange} 
+      onChange={onChange}
       variant={variant}
       label={label}
       color={color}
-      type={type}></TextField>
-  )
-}
+      type={type}
+    ></TextField>
+  );
+};
 
 export { TextInput };

@@ -10,25 +10,24 @@ const ExplorePage = () => {
   const [selectedMuscleGroupId, setSelectedMuscleGroupId] = useState<number>(1);
   const [exerciseResults, setExerciseResults] = useState<any[]>([]);
 
-  const { data, refetch, isRefetching } = useQuery({ 
+  const { data, refetch, isRefetching } = useQuery({
     queryKey: ['exercises'],
     enabled: false,
-    queryFn: () => searchExercises(selectedEquipmentId, selectedMuscleGroupId)
+    queryFn: () => searchExercises(selectedEquipmentId, selectedMuscleGroupId),
   });
 
   const fetchExerciseResults = async () => {
     const results = await refetch();
 
     console.log('RESULT', results);
-  }
+  };
 
   return (
     <div>
       explore!
-
       <Button onClick={fetchExerciseResults}>Search</Button>
     </div>
-  )
-}
+  );
+};
 
 export default ExplorePage;
