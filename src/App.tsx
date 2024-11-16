@@ -3,6 +3,7 @@ import { Routes, Route, Outlet, BrowserRouter } from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import ExplorePage from './pages/main/ExplorePage/ExplorePage';
+import MyWorkoutsPage from './pages/main/MyWorkoutsPage/MyWorkoutsPage';
 import Navbar from './components/Navbar/Navbar';
 
 import './App.css';
@@ -37,6 +38,7 @@ function App() {
       <Routes>
         <Route path="/main" element={<Main />}>
           <Route index path="explore" element={<ExplorePage />}></Route>
+          <Route path="my-workouts" element={<MyWorkoutsPage />}></Route>
         </Route>
 
         <Route path="/login" element={<LoginPage />}></Route>

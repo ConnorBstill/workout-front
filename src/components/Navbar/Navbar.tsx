@@ -22,7 +22,16 @@ import { clearJwt } from '../../api-services/JwtService';
 
 import './Navbar.module.css';
 
-const pages = ['My Workouts', 'Explore'];
+const pages = [
+  {
+    route: '/main/my-workouts',
+    label: 'My Workouts',
+  },
+  {
+    route: '/main/explore',
+    label: 'Explore',
+  },
+];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navbar = () => {
@@ -38,6 +47,12 @@ const Navbar = () => {
     setAnchorElUser(event.currentTarget);
   };
 
+  const handleNavigationClick = (route: string): void => {
+    setAnchorElNav(null);
+
+    navigate(route);
+  };
+
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -51,19 +66,39 @@ const Navbar = () => {
     navigate('/login');
   };
 
-  const renderNavItems = () => {
+  const renderNavMenuItems = () => {
     return pages.map((page) => (
-      <MenuItem key={page} onClick={handleCloseNavMenu}>
+      <MenuItem key={page.label} onClick={() => handleNavigationClick(page.route)}>
         <Typography color="textPrimary" sx={{ textAlign: 'center' }}>
-          {page}
+          {page.label}
         </Typography>
+      </MenuItem>
+    ));
+  };
+
+  const renderNavButtonItems = () => {
+    return pages.map((page) => (
+      <Button
+        key={page.label}
+        onClick={() => handleNavigationClick(page.route)}
+        sx={{ my: 2, color: 'white', display: 'block' }}
+      >
+        {page.label}
+      </Button>
+    ));
+  };
+
+  const renderSettingsItems = () => {
+    return settings.map((setting) => (
+      <MenuItem key={setting} onClick={handleCloseUserMenu}>
+        <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
       </MenuItem>
     ));
   };
 
   return (
     <AppBar color="secondary" position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth={false}>
         <Toolbar disableGutters>
           <Logo display={{ xs: 'none', md: 'flex' }} />
 
@@ -78,6 +113,7 @@ const Navbar = () => {
             >
               <MenuIcon />
             </IconButton>
+
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -94,29 +130,20 @@ const Navbar = () => {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
-              {renderNavItems()}
+              {renderNavMenuItems()}
             </Menu>
           </Box>
 
           <Logo display={{ xs: 'flex', md: 'none' }} />
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>{renderNavButtonItems()}</Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
+
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -133,11 +160,7 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                </MenuItem>
-              ))}
+              {renderSettingsItems()}
             </Menu>
           </Box>
         </Toolbar>
