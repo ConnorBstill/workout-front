@@ -1,7 +1,13 @@
 import { get } from './HttpService';
 
+import { Response } from '../types/api.type';
+
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const searchExercises = (equipmentId: number, muscleGroupId: number): Promise<any> => {
+export const searchExercises = (equipmentId: number, muscleGroupId: number): Promise<Response> => {
   return get(`${API_URL}/exercise?equipmentId=${equipmentId}&muscleGroupId=${muscleGroupId}`);
 };
+
+export const getMuscleGroups = (): Promise<Response> => {
+  return get(`${API_URL}/exercise/muscle-group`);
+}

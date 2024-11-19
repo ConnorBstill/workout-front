@@ -8,7 +8,6 @@ const queryClient = new QueryClient();
 import './index.css';
 import theme from './theme';
 import App from './App.tsx';
-import Navbar from './components/Navbar/Navbar.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

@@ -1,14 +1,24 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import { searchExercises } from '../../../api-services/ExerciseService';
+import { searchExercises, getMuscleGroups } from '../../../api-services/ExerciseService';
 
-import { Button } from '../../../components/common';
+import { MenuItem, InputLabel, Typography } from '@mui/material';
+
+import { Button, Select } from '../../../components/common';
+
+import { MuscleGroup } from '../../../types/exercise.types';
 
 const ExplorePage = () => {
-  const [selectedEquipmentId, setSelectedEquipmentId] = useState<number>(2);
   const [selectedMuscleGroupId, setSelectedMuscleGroupId] = useState<number>(1);
+  const [selectedEquipmentId, setSelectedEquipmentId] = useState<number>(2);
   const [exerciseResults, setExerciseResults] = useState<any[]>([]);
+
+  // const { data: muscleGroups } = useQuery()
+  const { data: muscleGroupsRes, isLoading, isError } = useQuery({ 
+    queryKey: ['muscleGroup'], 
+    queryFn: getMuscleGroups 
+  });
 
   const { data, refetch, isRefetching } = useQuery({
     queryKey: ['exercises'],
@@ -22,10 +32,33 @@ const ExplorePage = () => {
     console.log('RESULT', results);
   };
 
+  const handleMuscleGroupChange = () => {
+
+  }
+
+  const renderMuscleGroupsItems = () => {
+    return muscleGroupsRes?.data.map((muscleGroup: MuscleGroup) => {
+      const { id, label } = muscleGroup;
+
+      return <MenuItem value={id} key={`${label}`}>{label}</MenuItem>
+    })
+  }
+
   return (
-    <div>
-      explore!
-      <Button onClick={fetchExerciseResults}>Search</Button>
+    <div className="flex justify-center">
+      <div className="flex flex-col justify-center items-center w-2/4">
+        <Typography variant="h4">Explore</Typography>
+        <InputLabel id="demo-simple-select-label">Muscle Groups</InputLabel>
+        <Select
+          variant="outlined"
+          value={selectedMuscleGroupId}
+          label="Muscle Group"
+          onChange={handleMuscleGroupChange}
+        >
+          {renderMuscleGroupsItems()}
+        </Select>
+      </div>
+      {/* <Button onClick={fetchExerciseResults}>Search</Button> */}
     </div>
   );
 };
