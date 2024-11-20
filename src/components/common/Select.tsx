@@ -1,6 +1,10 @@
 import { SelectProps } from '@mui/material';
 import { Select as MuiSelect, MenuItem, InputLabel } from '@mui/material';
 
+import { TEXT_PRIMARY_LIGHT_COLOR, TEXT_PRIMARY_DIM_COLOR } from '../../colors'
+
+import './Select/Select.module.css';
+
 const Select = ({ onChange, variant, label, children, value }: SelectProps) => {
   return (
     <MuiSelect
@@ -8,6 +12,10 @@ const Select = ({ onChange, variant, label, children, value }: SelectProps) => {
         value={value}
         label={label}
         onChange={onChange}
+        sx={{ 
+          '.MuiSelect-icon': { color: TEXT_PRIMARY_LIGHT_COLOR },
+          '.MuiOutlinedInput-notchedOutline': { borderColor: TEXT_PRIMARY_DIM_COLOR }
+        }}
       >
         {children}
       </MuiSelect>
