@@ -8,14 +8,11 @@ const API_URL = import.meta.env.VITE_API_URL;
 export const registerUser = async (user: User): Promise<Response> => {
   try {
     return post(`${API_URL}/auth/register`, user);
-    // return res.json();
   } catch (err: any) {
-    return { data: [], error: err };
+    return { data: [], err };
   }
 };
 
-export const logInUser = async (user: User): Promise<Response> => {
-  // const res = await fetch(`${API_URL}/authenticate`);
+export const authenticateUser = async (user: User): Promise<Response> => {
   return post(`${API_URL}/auth/login`, user);
-  // return res.json();
 };

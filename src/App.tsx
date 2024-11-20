@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, Outlet, BrowserRouter, Navigate } from 'react-router-dom';
 
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
@@ -6,30 +6,23 @@ import ExplorePage from './pages/main/ExplorePage/ExplorePage';
 import MyWorkoutsPage from './pages/main/MyWorkoutsPage/MyWorkoutsPage';
 import Navbar from './components/Navbar/Navbar';
 
+import { checkTokens } from './api-services/JwtService';
+
 import './App.css';
 
-// const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <LoginPage />,
-//   },
-//   {
-//     path: '/register',
-//     element: <RegisterPage />,
-//   },
-//   {
-//     path: '/explore',
-//     element: <ExplorePage />,
-//   },
-// ]);
-
 const Main = () => {
-  return (
-    <>
-      <Navbar />
-      <Outlet />
-    </>
-  );
+  const loggedIn = checkTokens();
+
+  if (loggedIn) {
+    return (
+      <>
+        <Navbar />
+        <Outlet />
+      </>
+    );
+  } else {
+    return <Navigate to="/login" />
+  }
 };
 
 function App() {

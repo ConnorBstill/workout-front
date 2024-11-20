@@ -7,16 +7,20 @@ import { Typography } from '@mui/material';
 
 import classes from './LoginPageStyles.module.css';
 
-import { logInUser } from '../../api-services/AuthService';
-import { setJwt } from '../../api-services/JwtService';
+import { authenticateUser } from '../../api-services/AuthService';
+import { setJwt, setRefresh } from '../../api-services/JwtService';
 
 const LoginPage = () => {
   const mutation = useMutation({
-    mutationFn: logInUser,
+    mutationFn: authenticateUser,
     onSuccess: (res) => {
-      console.log('handleLoginClick');
-      setJwt(res.data.jwt);
-      navigate('/main/explore');
+      const { err, data: { jwt, refreshToken } } = res;
+
+      if (!err) {
+        setJwt(jwt);
+        setRefresh(refreshToken)
+        navigate('/main/explore');
+      }
     },
   });
 

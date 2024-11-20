@@ -1,4 +1,4 @@
 export interface Response {
   data: any;
-  error: boolean;
+  err: boolean;
 }
