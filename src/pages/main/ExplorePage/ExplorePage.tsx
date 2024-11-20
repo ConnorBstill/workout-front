@@ -15,9 +15,13 @@ const ExplorePage = () => {
   const [exerciseResults, setExerciseResults] = useState<any[]>([]);
 
   // const { data: muscleGroups } = useQuery()
-  const { data: muscleGroupsRes, isLoading, isError } = useQuery({ 
-    queryKey: ['muscleGroup'], 
-    queryFn: getMuscleGroups 
+  const {
+    data: muscleGroupsRes,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['muscleGroup'],
+    queryFn: getMuscleGroups,
   });
 
   const { data, refetch, isRefetching } = useQuery({
@@ -32,17 +36,19 @@ const ExplorePage = () => {
     console.log('RESULT', results);
   };
 
-  const handleMuscleGroupChange = () => {
-
-  }
+  const handleMuscleGroupChange = () => {};
 
   const renderMuscleGroupsItems = () => {
     return muscleGroupsRes?.data.map((muscleGroup: MuscleGroup) => {
       const { id, label } = muscleGroup;
 
-      return <MenuItem value={id} key={`${label}`}>{label}</MenuItem>
-    })
-  }
+      return (
+        <MenuItem value={id} key={`${label}`}>
+          {label}
+        </MenuItem>
+      );
+    });
+  };
 
   return (
     <div className="flex justify-center">

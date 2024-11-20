@@ -10,4 +10,4 @@ export const searchExercises = (equipmentId: number, muscleGroupId: number): Pro
 
 export const getMuscleGroups = (): Promise<Response> => {
   return get(`${API_URL}/exercise/muscle-group`);
-}
+};

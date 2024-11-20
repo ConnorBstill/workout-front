@@ -36,9 +36,9 @@ export const checkTokens = () => {
       if (seconds >= expires) {
         clearJwt();
 
-        return ''
+        return '';
       } else {
-        return getJwt()
+        return getJwt();
       }
     }
 
@@ -46,4 +46,4 @@ export const checkTokens = () => {
   } catch (e) {
     // this.defaultErrorHandler();
   }
-}
+};

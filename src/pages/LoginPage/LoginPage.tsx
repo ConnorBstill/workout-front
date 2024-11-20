@@ -14,11 +14,14 @@ const LoginPage = () => {
   const mutation = useMutation({
     mutationFn: authenticateUser,
     onSuccess: (res) => {
-      const { err, data: { jwt, refreshToken } } = res;
+      const {
+        err,
+        data: { jwt, refreshToken },
+      } = res;
 
       if (!err) {
         setJwt(jwt);
-        setRefresh(refreshToken)
+        setRefresh(refreshToken);
         navigate('/main/explore');
       }
     },

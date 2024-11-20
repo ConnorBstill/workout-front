@@ -25,7 +25,7 @@ const theme = createTheme({
     error: {
       main: red[600],
     },
-  }
+  },
 });
 
 export default theme;

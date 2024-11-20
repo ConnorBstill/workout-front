@@ -1,5 +1,5 @@
 export interface MuscleGroup {
   id: number;
-  name: string; 
+  name: string;
   label: string;
 }
