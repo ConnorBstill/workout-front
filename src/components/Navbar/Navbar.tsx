@@ -97,7 +97,7 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar color="secondary" position="static" className="mb-6" sx={{ marginBottom: '15px' }}>
+    <AppBar color="transparent" position="static" className="mb-4" sx={{ marginBottom: '15px' }}>
       <Container maxWidth={false}>
         <Toolbar disableGutters>
           <Logo display={{ xs: 'none', md: 'flex' }} />

@@ -1,6 +1,16 @@
 import { createTheme } from '@mui/material/styles';
-import { blue, red } from '@mui/material/colors';
-import { PRIMARY_COLOR, SECONDARY_COLOR, TEXT_PRIMARY_LIGHT_COLOR } from './colors';
+
+import {
+  PRIMARY_COLOR,
+  PRIMARY_DARK_COLOR,
+  PRIMARY_LIGHT_COLOR,
+  SECONDARY_COLOR,
+  SECONDARY_DARK_COLOR,
+  SECONDARY_LIGHT_COLOR,
+  SECONDARY_TEXT_CONTRAST_COLOR,
+  TEXT_PRIMARY_LIGHT_COLOR,
+  ERROR_COLOR,
+} from './colors';
 
 const theme = createTheme({
   cssVariables: true,
@@ -8,22 +18,21 @@ const theme = createTheme({
     text: {
       primary: TEXT_PRIMARY_LIGHT_COLOR,
       secondary: TEXT_PRIMARY_LIGHT_COLOR,
-      // disabled: string;
     },
     primary: {
       main: PRIMARY_COLOR,
-      light: '#fd6049',
-      // dark: '#a12a1b',
-      // contrastText: '#fff'
+      light: PRIMARY_LIGHT_COLOR,
+      dark: PRIMARY_DARK_COLOR,
+      contrastText: TEXT_PRIMARY_LIGHT_COLOR,
     },
     secondary: {
-      main: '#1d1d1d',
-      light: '#53a4f3',
-      // dark: '#175fc7',
-      // contrastText: '#fff'
+      main: SECONDARY_COLOR,
+      light: SECONDARY_LIGHT_COLOR,
+      dark: SECONDARY_DARK_COLOR,
+      contrastText: SECONDARY_TEXT_CONTRAST_COLOR,
     },
     error: {
-      main: red[600],
+      main: ERROR_COLOR,
     },
   },
 });
