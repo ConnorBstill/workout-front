@@ -5,8 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button, TextInput } from '../../components/common';
 import { Typography } from '@mui/material';
 
-import classes from './LoginPageStyles.module.css';
-
 import { authenticateUser } from '../../api-services/AuthService';
 import { setJwt, setRefresh } from '../../api-services/JwtService';
 
@@ -37,13 +35,13 @@ const LoginPage = () => {
   };
 
   return (
-    <div className={classes.container}>
+    <div className="flex flex-col justify-center items-center h-full w-full">
       <Typography variant="h3" color="primary" className="mb-6">
         Login
       </Typography>
 
-      <form className={classes['form-container']}>
-        <div className={classes['input-container']}>
+      <form className="flex flex-col items-center">
+        <div className="mb-2">
           <TextInput
             onChange={(e) => setEmail(e.target.value)}
             type="text"
@@ -56,7 +54,7 @@ const LoginPage = () => {
           />
         </div>
 
-        <div className={`${classes['input-container']} mb-6`}>
+        <div className="mb-5">
           <TextInput
             onChange={(e) => setPassword(e.target.value)}
             type="password"
@@ -69,15 +67,15 @@ const LoginPage = () => {
           />
         </div>
 
-        <Button onClick={handleLoginClick} variant="contained" className="mb-2">
+        <Button onClick={handleLoginClick} variant="contained" className="mb-3">
           Login
         </Button>
 
         <Typography variant="body2" color="textPrimary">
           Don't have an account yet? Click{' '}
-          <Link to="/" id={classes['register-link']}>
+          <Link to="/" className="link">
             here
-          </Link>
+          </Link>{' '}
           to register
         </Typography>
       </form>

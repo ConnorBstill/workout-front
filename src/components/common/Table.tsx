@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import {
   Table as MuiTable,
   TableBody,
