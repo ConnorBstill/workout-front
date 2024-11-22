@@ -3,16 +3,16 @@ import { useQuery } from '@tanstack/react-query';
 
 import { searchExercises, getMuscleGroups, getEquipment } from '../../../api-services/ExerciseService';
 
-import { MenuItem, InputLabel, Typography, FormControl } from '@mui/material';
+import { MenuItem, InputLabel, Typography, FormControl, CircularProgress } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 
-import { Button, SelectInput } from '../../../components/common';
+import { Table, SelectInput } from '../../../components/common';
 
 import { MuscleGroup, Equipment } from '../../../types/exercise.types';
 
 const ExplorePage = () => {
-  const [selectedMuscleGroupId, setSelectedMuscleGroupId] = useState<string>('');
-  const [selectedEquipmentId, setSelectedEquipmentId] = useState<string>('');
+  const [selectedMuscleGroupId, setSelectedMuscleGroupId] = useState<string>('0');
+  const [selectedEquipmentId, setSelectedEquipmentId] = useState<string>('0');
 
   const {
     data: muscleGroupsRes,
@@ -32,14 +32,9 @@ const ExplorePage = () => {
     queryFn: getEquipment,
   });
 
-  const {
-    data,
-    refetch: fetchExerciseResults,
-    isRefetching,
-  } = useQuery({
-    queryKey: ['exercises'],
-    enabled: false,
-    queryFn: () => searchExercises(+selectedEquipmentId, +selectedMuscleGroupId),
+  const { data: exerciseResults, isLoading: exercisesLoading } = useQuery({
+    queryKey: ['exercises', selectedEquipmentId, selectedMuscleGroupId],
+    queryFn: () => searchExercises(selectedEquipmentId, selectedMuscleGroupId),
   });
 
   // const fetchExerciseResults = async () => {
@@ -49,13 +44,17 @@ const ExplorePage = () => {
   // };
 
   const handleMuscleGroupChange = async (event: SelectChangeEvent<any>) => {
+    console.log('handleMuscleGroupChange', event.target.value);
     setSelectedMuscleGroupId(event.target.value);
-    await fetchExerciseResults();
+
+    console.log('exerciseResults mg', exerciseResults);
   };
 
   const handleEquipmentChange = async (event: SelectChangeEvent<any>) => {
+    console.log('handleEquipmentChange', event.target.value);
     setSelectedEquipmentId(event.target.value);
-    await fetchExerciseResults();
+
+    console.log('exerciseResults eq', exerciseResults);
   };
 
   const renderMuscleGroupSelectItems = () => {
@@ -82,14 +81,23 @@ const ExplorePage = () => {
     });
   };
 
+  const renderExercisesTable = () => {
+    if (exercisesLoading) return <CircularProgress />;
+
+    return <Table headers={[{ label: 'Name', key: 'name' }]} data={exerciseResults?.data} />;
+  };
+
   return (
     <div className="flex justify-center">
       <div className="flex flex-col justify-center items-center w-2/4">
-        <Typography variant="h4" className="mb-4">
+        <Typography variant="h4" className="mb-6">
           Explore
         </Typography>
 
-        <div className="flex flex-row w-full">
+        <Typography variant="body2" className="mb-6">
+          Filter exercises by:
+        </Typography>
+        <div className="flex flex-row w-full mb-6">
           <FormControl fullWidth className="mx-1">
             <InputLabel id="muscle-group-select-label">Muscle Group</InputLabel>
             <SelectInput
@@ -100,6 +108,7 @@ const ExplorePage = () => {
               id="muscle-group-select"
               onChange={handleMuscleGroupChange}
             >
+              <MenuItem value={'0'}>Any</MenuItem>
               {renderMuscleGroupSelectItems()}
             </SelectInput>
           </FormControl>
@@ -114,10 +123,13 @@ const ExplorePage = () => {
               id="equipment-select"
               onChange={handleEquipmentChange}
             >
+              <MenuItem value={'0'}>Any</MenuItem>
               {renderEquipmentSelectItems()}
             </SelectInput>
           </FormControl>
         </div>
+
+        {renderExercisesTable()}
       </div>
       {/* <Button onClick={fetchExerciseResults}>Search</Button> */}
     </div>

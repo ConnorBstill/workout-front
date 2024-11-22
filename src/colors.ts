@@ -9,6 +9,8 @@ export const SECONDARY_DARK_COLOR = '#00d5f7';
 export const SECONDARY_LIGHT_COLOR = '#b1f3fd';
 export const SECONDARY_TEXT_CONTRAST_COLOR = '#ffffff';
 
+export const MEDIUM_GREY = '#14171a';
+
 export const TEXT_PRIMARY_LIGHT_COLOR = '#a6a7a7';
 export const TEXT_PRIMARY_DIM_COLOR = '#363a3b';
 
