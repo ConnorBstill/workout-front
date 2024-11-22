@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import {
   AppBar,
@@ -32,7 +32,6 @@ const pages = [
     label: 'Explore',
   },
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -62,6 +61,7 @@ const Navbar = () => {
   };
 
   const handleLogoutClick = () => {
+    handleCloseUserMenu()
     clearJwt();
     navigate('/login');
   };
@@ -89,11 +89,21 @@ const Navbar = () => {
   };
 
   const renderSettingsItems = () => {
-    return settings.map((setting) => (
-      <MenuItem key={setting} onClick={handleCloseUserMenu}>
-        <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-      </MenuItem>
-    ));
+    return (
+      <>
+        <MenuItem>
+          <Typography sx={{ textAlign: 'center' }}>Profile</Typography>
+        </MenuItem>
+
+        <MenuItem>
+          <Typography sx={{ textAlign: 'center' }}>Account</Typography>
+        </MenuItem>
+
+        <MenuItem onClick={handleLogoutClick}>
+          <Typography sx={{ textAlign: 'center' }}>Logout</Typography>
+        </MenuItem>
+      </>
+    );
   };
 
   return (
@@ -136,7 +146,10 @@ const Navbar = () => {
 
           <Logo display={{ xs: 'flex', md: 'none' }} />
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>{renderNavButtonItems()}</Box>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {renderNavButtonItems()}
+          </Box>
+
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
