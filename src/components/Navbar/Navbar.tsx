@@ -18,7 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import { Button, Logo } from '../common/index';
 
-import { clearJwt } from '../../api-services/JwtService';
+import { clearJwt } from '../../api-services/jwt-service';
 
 import './Navbar.module.css';
 
@@ -61,7 +61,7 @@ const Navbar = () => {
   };
 
   const handleLogoutClick = () => {
-    handleCloseUserMenu()
+    handleCloseUserMenu();
     clearJwt();
     navigate('/login');
   };
@@ -107,7 +107,7 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar color="transparent" position="static" className="mb-4" sx={{ marginBottom: '15px' }}>
+    <AppBar color="transparent" position="static" className="mb-10">
       <Container maxWidth={false}>
         <Toolbar disableGutters>
           <Logo display={{ xs: 'none', md: 'flex' }} />
@@ -146,9 +146,7 @@ const Navbar = () => {
 
           <Logo display={{ xs: 'flex', md: 'none' }} />
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {renderNavButtonItems()}
-          </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>{renderNavButtonItems()}</Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

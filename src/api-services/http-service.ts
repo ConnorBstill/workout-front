@@ -1,4 +1,4 @@
-import { getJwt } from './JwtService';
+import { getJwt } from './jwt-service';
 
 export const get = async (url: string, headers?: HeadersInit) => {
   try {
@@ -34,7 +34,7 @@ export const post = async (url: string, body: any, headers?: HeadersInit): Promi
 export const put = async (url: string, headers?: HeadersInit) => {
   try {
     const res = await fetch(url, {
-      method: 'GET',
+      method: 'PUT',
       headers: { ...headers },
     });
 
@@ -45,7 +45,7 @@ export const put = async (url: string, headers?: HeadersInit) => {
 export const remove = async (url: string, headers?: HeadersInit) => {
   try {
     const res = await fetch(url, {
-      method: 'GET',
+      method: 'DELETE',
       headers: { ...headers },
     });
 

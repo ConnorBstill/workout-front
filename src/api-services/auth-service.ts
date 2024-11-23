@@ -1,4 +1,4 @@
-import { get, post } from './HttpService';
+import { get, post } from './http-service';
 
 import { User } from '../types/user.types';
 import { Response } from '../types/api.type';

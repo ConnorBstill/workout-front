@@ -5,8 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button, TextInput } from '../../components/common';
 import { Typography } from '@mui/material';
 
-import { registerUser } from '../../api-services/AuthService';
-import { setJwt, setRefresh } from '../../api-services/JwtService';
+import { registerUser } from '../../api-services/auth-service';
+import { setJwt, setRefresh } from '../../api-services/jwt-service';
 
 const LoginPage = () => {
   const navigate = useNavigate();

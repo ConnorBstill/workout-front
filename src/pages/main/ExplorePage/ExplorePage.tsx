@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import { searchExercises, getMuscleGroups, getEquipment } from '../../../api-services/ExerciseService';
+import { searchExercises, getMuscleGroups, getEquipment } from '../../../api-services/exercise-service';
 
 import { MenuItem, InputLabel, Typography, FormControl, CircularProgress } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';

@@ -1,4 +1,4 @@
-import { get } from './HttpService';
+import { get } from './http-service';
 
 import { Response } from '../types/api.type';
 

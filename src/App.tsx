@@ -6,7 +6,7 @@ import ExplorePage from './pages/main/ExplorePage/ExplorePage';
 import MyWorkoutsPage from './pages/main/MyWorkoutsPage/MyWorkoutsPage';
 import Navbar from './components/Navbar/Navbar';
 
-import { checkTokens } from './api-services/JwtService';
+import { checkTokens } from './api-services/jwt-service';
 
 import './App.css';
 
