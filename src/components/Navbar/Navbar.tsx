@@ -88,24 +88,6 @@ const Navbar = () => {
     ));
   };
 
-  const renderSettingsItems = () => {
-    return (
-      <>
-        <MenuItem>
-          <Typography sx={{ textAlign: 'center' }}>Profile</Typography>
-        </MenuItem>
-
-        <MenuItem>
-          <Typography sx={{ textAlign: 'center' }}>Account</Typography>
-        </MenuItem>
-
-        <MenuItem onClick={handleLogoutClick}>
-          <Typography sx={{ textAlign: 'center' }}>Logout</Typography>
-        </MenuItem>
-      </>
-    );
-  };
-
   return (
     <AppBar color="transparent" position="static" className="mb-10">
       <Container maxWidth={false}>
@@ -146,7 +128,9 @@ const Navbar = () => {
 
           <Logo display={{ xs: 'flex', md: 'none' }} />
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>{renderNavButtonItems()}</Box>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {renderNavButtonItems()}
+          </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -171,7 +155,17 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {renderSettingsItems()}
+              <MenuItem>
+                <Typography sx={{ textAlign: 'center' }}>Profile</Typography>
+              </MenuItem>
+
+              <MenuItem>
+                <Typography sx={{ textAlign: 'center' }}>Account</Typography>
+              </MenuItem>
+
+              <MenuItem onClick={handleLogoutClick}>
+                <Typography sx={{ textAlign: 'center' }}>Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
