@@ -1,5 +1,4 @@
 import { SelectProps } from '@mui/material';
-import { MenuItem, InputLabel } from '@mui/material';
 import Select from '@mui/material/Select';
 
 import { TEXT_PRIMARY_LIGHT_COLOR, TEXT_PRIMARY_DIM_COLOR } from '../../colors';
