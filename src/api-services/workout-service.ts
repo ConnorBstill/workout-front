@@ -15,8 +15,8 @@ export const getWorkouts = (): Promise<GetWorkoutResponse> => {
 
 export const getWorkoutById = (id: number): Promise<any> => {
   return get(`${API_URL}/workout/${id}`);
-}
+};
 
 export const getWorkoutExercises = (id: number): Promise<any> => {
   return get(`${API_URL}/workout/${id}/exercise`);
-}
+};

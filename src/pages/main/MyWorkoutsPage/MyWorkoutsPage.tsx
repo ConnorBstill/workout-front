@@ -19,7 +19,11 @@ const MyWorkoutsPage = () => {
       <ListItem component={Paper} className="flex justify-between h-28 sm:h-16 mb-3" key={workout.id}>
         <ListItemText className="w-1/2" primary={workout.name} />
         <div className="flex flex-col sm:flex-row justify-end">
-          <Button onClick={() => navigate(`/main/my-workouts/${workout.id}`)} className="w-full sm:w-2/4 mr-2 mb-1 sm:mb-0" variant="outlined">
+          <Button
+            onClick={() => navigate(`/main/my-workouts/${workout.id}`)}
+            className="w-full sm:w-2/4 mr-2 mb-1 sm:mb-0"
+            variant="outlined"
+          >
             View
           </Button>
 

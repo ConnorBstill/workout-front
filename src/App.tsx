@@ -37,8 +37,7 @@ function App() {
         <Route path="main" element={<Main />}>
           <Route path="explore" element={<ExplorePage />}></Route>
 
-          <Route path="my-workouts" element={<MyWorkoutsPage />}>
-          </Route>
+          <Route path="my-workouts" element={<MyWorkoutsPage />}></Route>
 
           <Route path="my-workouts/:workoutId" element={<ViewWorkoutsPage />}></Route>
         </Route>

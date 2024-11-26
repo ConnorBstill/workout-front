@@ -1,6 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams, Link } from 'react-router-dom';
-import { DragDropContext, Droppable, Draggable, DroppableProvided, DroppableStateSnapshot } from "@hello-pangea/dnd";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DroppableProvided,
+  DroppableStateSnapshot,
+} from '@hello-pangea/dnd';
 import { Box, Typography, CircularProgress, List, ListItem, ListItemText, Paper } from '@mui/material';
 
 import { getWorkoutById, getWorkoutExercises } from '../../../../api-services/workout-service';
@@ -26,13 +32,9 @@ const ViewWorkoutPage = () => {
 
   const renderExerciseDraggable = (provided: DroppableProvided, snapshot: DroppableStateSnapshot) => {
     return (
-      <List
-        className="pt-0"
-        {...provided.droppableProps}
-        ref={provided.innerRef}
-      >
+      <List className="pt-0" {...provided.droppableProps} ref={provided.innerRef}>
         {workoutExercisesRes?.data.map((workout: Exercise, index: number) => {
-          const { id, name, sets,repsPerSet, restTime, restTimeUnit } = workout;
+          const { id, name, sets, repsPerSet, restTime, restTimeUnit } = workout;
           return (
             <Draggable key={id} draggableId={`${id}`} index={index}>
               {(provided, snapshot) => (
@@ -46,35 +48,41 @@ const ViewWorkoutPage = () => {
                   <ListItemText>{name}</ListItemText>
                   <ListItemText>{sets} sets</ListItemText>
                   <ListItemText>{repsPerSet} reps</ListItemText>
-                  <ListItemText>{restTime}{restTimeUnit} rest</ListItemText>
+                  <ListItemText>
+                    {restTime}
+                    {restTimeUnit} rest
+                  </ListItemText>
                 </ListItem>
               )}
             </Draggable>
-          )
+          );
         })}
         {provided.placeholder}
       </List>
-    )
-  }
+    );
+  };
 
   const renderWorkoutExercises = () => {
     const { data } = workoutExercisesRes;
 
     if (!data.length) {
       return (
-        <p>This workout doesn't have any exercises yet. <Link to="/" className="link">Click here</Link> to edit this workout and add some.</p>
+        <p>
+          This workout doesn't have any exercises yet.{' '}
+          <Link to="/" className="link">
+            Click here
+          </Link>{' '}
+          to edit this workout and add some.
+        </p>
       );
     } else {
       return (
-          <DragDropContext onDragEnd={(e) => console.log('DRAG END', e)}>
-            <Droppable droppableId="droppable">
-              {renderExerciseDraggable}
-            </Droppable>
-          </DragDropContext>
+        <DragDropContext onDragEnd={(e) => console.log('DRAG END', e)}>
+          <Droppable droppableId="droppable">{renderExerciseDraggable}</Droppable>
+        </DragDropContext>
       );
     }
-  }
-
+  };
 
   return (
     <div className="flex flex-col justify-center items-center px-8">
@@ -83,9 +91,7 @@ const ViewWorkoutPage = () => {
       </Typography>
 
       <div className="flex flex-row justify-between w-full">
-        <div className="w-1/2 mr-2">
-          {renderWorkoutExercises()}
-        </div>
+        <div className="w-1/2 mr-2">{renderWorkoutExercises()}</div>
 
         <div className="w-1/2">
           <TextInput variant="outlined" className="w-full" multiline minRows={4} label="Notes" />

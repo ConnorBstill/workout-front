@@ -128,9 +128,7 @@ const Navbar = () => {
 
           <Logo display={{ xs: 'flex', md: 'none' }} />
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {renderNavButtonItems()}
-          </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>{renderNavButtonItems()}</Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
