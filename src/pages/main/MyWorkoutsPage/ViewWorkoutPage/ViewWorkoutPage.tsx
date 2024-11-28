@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, Link } from 'react-router-dom';
 import {
@@ -7,7 +8,20 @@ import {
   DroppableProvided,
   DroppableStateSnapshot,
 } from '@hello-pangea/dnd';
-import { Box, Typography, CircularProgress, List, ListItem, ListItemText, Paper } from '@mui/material';
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material';
 
 import { getWorkoutById, getWorkoutExercises } from '../../../../api-services/workout-service';
 
@@ -15,8 +29,21 @@ import { Button, TextInput } from '../../../../components/common';
 
 import { Exercise } from '../../../../types/exercise.types';
 
+const initialExerciseEditing: Exercise = {
+  id: 0,
+  name: '',
+  weight: '',
+  repsPerSet: 0,
+  sets: 0,
+  restTime: 0,
+  restTimeUnit: 's',
+}
+
 const ViewWorkoutPage = () => {
   const { workoutId } = useParams();
+
+  const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
+  const [exerciseEditing, setExerciseEditing] = useState<Exercise>(initialExerciseEditing);
 
   const { data: workoutRes, isLoading: workoutLoading } = useQuery({
     queryKey: ['workout'],
@@ -30,11 +57,22 @@ const ViewWorkoutPage = () => {
 
   if (workoutLoading || workoutExercisesLoading) return <CircularProgress />;
 
+  const handleCloseEditDialog = () => {
+    setEditDialogOpen(false);
+    setExerciseEditing(initialExerciseEditing);
+  }
+
+  const handleOpenEditDialog = (workout: Exercise) => {
+    setExerciseEditing(workout);
+    setEditDialogOpen(true);
+  }
+
   const renderExerciseDraggable = (provided: DroppableProvided, snapshot: DroppableStateSnapshot) => {
     return (
       <List className="pt-0" {...provided.droppableProps} ref={provided.innerRef}>
         {workoutExercisesRes?.data.map((workout: Exercise, index: number) => {
           const { id, name, sets, repsPerSet, restTime, restTimeUnit } = workout;
+
           return (
             <Draggable key={id} draggableId={`${id}`} index={index}>
               {(provided, snapshot) => (
@@ -52,6 +90,8 @@ const ViewWorkoutPage = () => {
                     {restTime}
                     {restTimeUnit} rest
                   </ListItemText>
+
+                  <Button onClick={() => handleOpenEditDialog(workout)} variant="outlined">Edit</Button>
                 </ListItem>
               )}
             </Draggable>
@@ -63,7 +103,7 @@ const ViewWorkoutPage = () => {
   };
 
   const renderWorkoutExercises = () => {
-    const { data } = workoutExercisesRes;
+    const { data } = workoutExercisesRes!;
 
     if (!data.length) {
       return (
@@ -84,10 +124,50 @@ const ViewWorkoutPage = () => {
     }
   };
 
+  const renderEditDialog = () => {
+    return (
+      <Dialog
+        open={editDialogOpen}
+        onClose={handleCloseEditDialog}
+        // PaperProps={{
+        //   component: 'form',
+        //   onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+        //     event.preventDefault();
+            
+        //     handleClose();
+        //   },
+        // }}
+      >
+        <DialogTitle>Edit Exercise</DialogTitle>
+        <DialogContent>
+          {/* <DialogContentText>
+            To subscribe to this website, please enter your email address here. We
+            will send updates occasionally.
+          </DialogContentText> */}
+          <TextInput
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="email"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="outlined"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseEditDialog}>Cancel</Button>
+          <Button type="submit">Subscribe</Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
+
   return (
     <div className="flex flex-col justify-center items-center px-8">
       <Typography variant="h4" className="" gutterBottom>
-        {workoutRes.data.name}
+        {workoutRes!.data.name}
       </Typography>
 
       <div className="flex flex-row justify-between w-full">
@@ -97,6 +177,8 @@ const ViewWorkoutPage = () => {
           <TextInput variant="outlined" className="w-full" multiline minRows={4} label="Notes" />
         </div>
       </div>
+
+      {renderEditDialog()}
     </div>
   );
 };

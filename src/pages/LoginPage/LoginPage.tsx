@@ -20,7 +20,7 @@ const LoginPage = () => {
       if (!err) {
         setJwt(jwt);
         setRefresh(refreshToken);
-        navigate('/main/explore');
+        navigate('/main/my-workouts');
       }
     },
   });

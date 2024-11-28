@@ -1,4 +1,4 @@
-export interface Response {
-  data: any;
+export interface Response<Type> {
+  data: Type;
   err: boolean;
 }
