@@ -7,6 +7,7 @@ import {
   Draggable,
   DroppableProvided,
   DroppableStateSnapshot,
+  DropResult,
 } from '@hello-pangea/dnd';
 import {
   Box,
@@ -27,7 +28,8 @@ import { getWorkoutById, getWorkoutExercises } from '../../../../api-services/wo
 
 import { Button, TextInput } from '../../../../components/common';
 
-import { Exercise } from '../../../../types/exercise.types';
+import { Exercise } from '../../../../common/types/exercise.types';
+import { moveArrayElement } from '../../../../common/utils';
 
 const initialExerciseEditing: Exercise = {
   id: 0,
@@ -37,40 +39,58 @@ const initialExerciseEditing: Exercise = {
   sets: 0,
   restTime: 0,
   restTimeUnit: 's',
-}
+};
 
 const ViewWorkoutPage = () => {
   const { workoutId } = useParams();
 
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
   const [exerciseEditing, setExerciseEditing] = useState<Exercise>(initialExerciseEditing);
+  const [displayedExercises, setDisplayedExercises] = useState<Exercise[]>([]);
 
   const { data: workoutRes, isLoading: workoutLoading } = useQuery({
     queryKey: ['workout'],
+    // We assert that workoutId will not be null because it's impossible to route to this page without it
     queryFn: () => getWorkoutById(+workoutId!),
   });
 
   const { data: workoutExercisesRes, isLoading: workoutExercisesLoading } = useQuery({
     queryKey: ['workoutExercises'],
-    queryFn: () => getWorkoutExercises(+workoutId!),
+    queryFn: () => fetchWorkoutExercises(),
   });
+
+  const fetchWorkoutExercises = async () => {
+    const res = await getWorkoutExercises(+workoutId!);
+    setDisplayedExercises(res.data);
+    return res;
+  };
 
   if (workoutLoading || workoutExercisesLoading) return <CircularProgress />;
 
   const handleCloseEditDialog = () => {
     setEditDialogOpen(false);
     setExerciseEditing(initialExerciseEditing);
-  }
+  };
 
   const handleOpenEditDialog = (workout: Exercise) => {
     setExerciseEditing(workout);
     setEditDialogOpen(true);
-  }
+  };
+
+  const handleDragDrop = (event: DropResult) => {
+    const { destination, source } = event;
+
+    if (destination && source) {
+      setDisplayedExercises((prevExercises) =>
+        moveArrayElement(prevExercises, source.index, destination.index),
+      );
+    }
+  };
 
   const renderExerciseDraggable = (provided: DroppableProvided, snapshot: DroppableStateSnapshot) => {
     return (
       <List className="pt-0" {...provided.droppableProps} ref={provided.innerRef}>
-        {workoutExercisesRes?.data.map((workout: Exercise, index: number) => {
+        {displayedExercises?.map((workout: Exercise, index: number) => {
           const { id, name, sets, repsPerSet, restTime, restTimeUnit } = workout;
 
           return (
@@ -91,7 +111,9 @@ const ViewWorkoutPage = () => {
                     {restTimeUnit} rest
                   </ListItemText>
 
-                  <Button onClick={() => handleOpenEditDialog(workout)} variant="outlined">Edit</Button>
+                  <Button onClick={() => handleOpenEditDialog(workout)} variant="outlined">
+                    Edit
+                  </Button>
                 </ListItem>
               )}
             </Draggable>
@@ -117,7 +139,7 @@ const ViewWorkoutPage = () => {
       );
     } else {
       return (
-        <DragDropContext onDragEnd={(e) => console.log('DRAG END', e)}>
+        <DragDropContext onDragEnd={(e) => handleDragDrop(e)}>
           <Droppable droppableId="droppable">{renderExerciseDraggable}</Droppable>
         </DragDropContext>
       );
@@ -133,7 +155,7 @@ const ViewWorkoutPage = () => {
         //   component: 'form',
         //   onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
         //     event.preventDefault();
-            
+
         //     handleClose();
         //   },
         // }}
@@ -161,8 +183,8 @@ const ViewWorkoutPage = () => {
           <Button type="submit">Subscribe</Button>
         </DialogActions>
       </Dialog>
-    )
-  }
+    );
+  };
 
   return (
     <div className="flex flex-col justify-center items-center px-8">

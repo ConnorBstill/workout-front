@@ -19,5 +19,6 @@ export const getWorkoutById = (id: number): Promise<Response<Workout>> => {
 };
 
 export const getWorkoutExercises = (id: number): Promise<Response<Exercise[]>> => {
+  console.log('getWorkoutExercises');
   return get(`${API_URL}/workout/${id}/exercise`);
 };
