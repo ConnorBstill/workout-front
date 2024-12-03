@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useParams, Link } from 'react-router-dom';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
   DragDropContext,
   Droppable,
@@ -22,11 +22,12 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  SnackbarCloseReason
 } from '@mui/material';
 
-import { getWorkoutById, getWorkoutExercises } from '../../../../api-services/workout-service';
+import { getWorkoutById, getWorkoutExercises, setWorkoutExercises } from '../../../../api-services/workout-service';
 
-import { Button, TextInput } from '../../../../components/common';
+import { Button, TextInput, SimpleSnackbar } from '../../../../components/common';
 
 import { Exercise } from '../../../../common/types/exercise.types';
 import { moveArrayElement } from '../../../../common/utils';
@@ -42,16 +43,20 @@ const initialExerciseEditing: Exercise = {
 };
 
 const ViewWorkoutPage = () => {
-  const { workoutId } = useParams();
+  const workoutId = +useParams().workoutId!;
+  const navigate = useNavigate()
 
-  const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
-  const [exerciseEditing, setExerciseEditing] = useState<Exercise>(initialExerciseEditing);
+  if (!workoutId) return <p>An error has occurred, please click here to return: <Button onClick={() => navigate(-1)}>Go back</Button></p>
+
   const [displayedExercises, setDisplayedExercises] = useState<Exercise[]>([]);
+  const [exerciseEditing, setExerciseEditing] = useState<Exercise>(initialExerciseEditing);
+  const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
+  const [exercisesErrorSnackbar, setExercisesErrorSnackbar] = useState<boolean>(false);
 
   const { data: workoutRes, isLoading: workoutLoading } = useQuery({
     queryKey: ['workout'],
     // We assert that workoutId will not be null because it's impossible to route to this page without it
-    queryFn: () => getWorkoutById(+workoutId!),
+    queryFn: () => getWorkoutById(workoutId),
   });
 
   const { data: workoutExercisesRes, isLoading: workoutExercisesLoading } = useQuery({
@@ -59,8 +64,22 @@ const ViewWorkoutPage = () => {
     queryFn: () => fetchWorkoutExercises(),
   });
 
+  const workoutExercisesMutation = useMutation({
+    mutationFn: (data: { workoutId: number, reorderedExercises: Exercise[] }) => setWorkoutExercises(data.workoutId, data.reorderedExercises),
+    onSuccess: (res) => {
+      const {
+        err,
+        msg,
+      } = res;
+
+      if (err) {
+        setExercisesErrorSnackbar(true);
+      }
+    },
+  });
+
   const fetchWorkoutExercises = async () => {
-    const res = await getWorkoutExercises(+workoutId!);
+    const res = await getWorkoutExercises(workoutId);
     setDisplayedExercises(res.data);
     return res;
   };
@@ -81,11 +100,27 @@ const ViewWorkoutPage = () => {
     const { destination, source } = event;
 
     if (destination && source) {
-      setDisplayedExercises((prevExercises) =>
-        moveArrayElement(prevExercises, source.index, destination.index),
-      );
+      setDisplayedExercises((prevExercises) => {
+        const reorderedExercises = moveArrayElement(prevExercises, source.index, destination.index);
+
+        workoutExercisesMutation.mutate({ workoutId, reorderedExercises });
+
+        return reorderedExercises
+      });
+
     }
   };
+
+  const handleExercisesEditedSnackbarClose = (
+      event: React.SyntheticEvent | Event,
+      reason?: SnackbarCloseReason,
+    ) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setExercisesErrorSnackbar(false);
+    };
 
   const renderExerciseDraggable = (provided: DroppableProvided, snapshot: DroppableStateSnapshot) => {
     return (
@@ -201,6 +236,13 @@ const ViewWorkoutPage = () => {
       </div>
 
       {renderEditDialog()}
+
+      {/* Snackbar for reorder error */}
+      <SimpleSnackbar 
+        open={exercisesErrorSnackbar}
+        autoHideDuration={5000}
+        handleClose={handleExercisesEditedSnackbarClose}
+        message="There was an error reordering exercises" />
     </div>
   );
 };
