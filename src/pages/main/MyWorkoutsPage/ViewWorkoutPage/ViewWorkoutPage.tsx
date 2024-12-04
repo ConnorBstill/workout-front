@@ -22,10 +22,14 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  SnackbarCloseReason
+  SnackbarCloseReason,
 } from '@mui/material';
 
-import { getWorkoutById, getWorkoutExercises, setWorkoutExercises } from '../../../../api-services/workout-service';
+import {
+  getWorkoutById,
+  getWorkoutExercises,
+  setWorkoutExercises,
+} from '../../../../api-services/workout-service';
 
 import { Button, TextInput, SimpleSnackbar } from '../../../../components/common';
 
@@ -44,9 +48,15 @@ const initialExerciseEditing: Exercise = {
 
 const ViewWorkoutPage = () => {
   const workoutId = +useParams().workoutId!;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  if (!workoutId) return <p>An error has occurred, please click here to return: <Button onClick={() => navigate(-1)}>Go back</Button></p>
+  if (!workoutId)
+    return (
+      <p>
+        An error has occurred, please click here to return:{' '}
+        <Button onClick={() => navigate(-1)}>Go back</Button>
+      </p>
+    );
 
   const [displayedExercises, setDisplayedExercises] = useState<Exercise[]>([]);
   const [exerciseEditing, setExerciseEditing] = useState<Exercise>(initialExerciseEditing);
@@ -55,7 +65,6 @@ const ViewWorkoutPage = () => {
 
   const { data: workoutRes, isLoading: workoutLoading } = useQuery({
     queryKey: ['workout'],
-    // We assert that workoutId will not be null because it's impossible to route to this page without it
     queryFn: () => getWorkoutById(workoutId),
   });
 
@@ -65,12 +74,10 @@ const ViewWorkoutPage = () => {
   });
 
   const workoutExercisesMutation = useMutation({
-    mutationFn: (data: { workoutId: number, reorderedExercises: Exercise[] }) => setWorkoutExercises(data.workoutId, data.reorderedExercises),
+    mutationFn: (data: { workoutId: number; reorderedExercises: Exercise[] }) =>
+      setWorkoutExercises(data.workoutId, data.reorderedExercises),
     onSuccess: (res) => {
-      const {
-        err,
-        msg,
-      } = res;
+      const { err, msg } = res;
 
       if (err) {
         setExercisesErrorSnackbar(true);
@@ -105,22 +112,21 @@ const ViewWorkoutPage = () => {
 
         workoutExercisesMutation.mutate({ workoutId, reorderedExercises });
 
-        return reorderedExercises
+        return reorderedExercises;
       });
-
     }
   };
 
   const handleExercisesEditedSnackbarClose = (
-      event: React.SyntheticEvent | Event,
-      reason?: SnackbarCloseReason,
-    ) => {
-      if (reason === 'clickaway') {
-        return;
-      }
-  
-      setExercisesErrorSnackbar(false);
-    };
+    event: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason,
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setExercisesErrorSnackbar(false);
+  };
 
   const renderExerciseDraggable = (provided: DroppableProvided, snapshot: DroppableStateSnapshot) => {
     return (
@@ -182,40 +188,76 @@ const ViewWorkoutPage = () => {
   };
 
   const renderEditDialog = () => {
-    return (
-      <Dialog
-        open={editDialogOpen}
-        onClose={handleCloseEditDialog}
-        // PaperProps={{
-        //   component: 'form',
-        //   onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-        //     event.preventDefault();
+    const { name, repsPerSet, restTime, restTimeUnit, sets } = exerciseEditing;
 
-        //     handleClose();
-        //   },
-        // }}
-      >
+    return (
+      <Dialog open={editDialogOpen} onClose={handleCloseEditDialog} fullWidth>
         <DialogTitle>Edit Exercise</DialogTitle>
-        <DialogContent>
-          {/* <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
-          </DialogContentText> */}
+        <DialogContent className="asdf">
           <TextInput
-            autoFocus
+            value={name}
             required
-            margin="dense"
-            id="name"
-            name="email"
-            label="Email Address"
-            type="email"
+            margin="normal"
+            id="name-editing"
+            name="name"
+            label="Name"
             fullWidth
             variant="outlined"
           />
+
+          <div className="flex">
+            <TextInput
+              value={sets}
+              required
+              margin="normal"
+              className="w-1/2 mr-3"
+              id="name-editing"
+              name="name"
+              label="Sets"
+              variant="outlined"
+            />
+
+            <TextInput
+              value={repsPerSet}
+              required
+              margin="normal"
+              className="w-1/2"
+              id="name-editing"
+              name="name"
+              label="Reps"
+              variant="outlined"
+            />
+          </div>
+
+          <div className="flex">
+            <TextInput
+              value={restTime}
+              required
+              margin="normal"
+              className="w-1/2 mr-3"
+              id="name-editing"
+              name="name"
+              label="Rest time"
+              fullWidth
+              variant="outlined"
+            />
+            <TextInput
+              value={restTimeUnit}
+              required
+              margin="normal"
+              className="w-1/2"
+              id="name-editing"
+              name="name"
+              label="Rest time unit"
+              fullWidth
+              variant="outlined"
+            />
+          </div>
         </DialogContent>
+
         <DialogActions>
           <Button onClick={handleCloseEditDialog}>Cancel</Button>
-          <Button type="submit">Subscribe</Button>
+          <Button type="submit">Save</Button>
         </DialogActions>
       </Dialog>
     );
@@ -238,11 +280,12 @@ const ViewWorkoutPage = () => {
       {renderEditDialog()}
 
       {/* Snackbar for reorder error */}
-      <SimpleSnackbar 
+      <SimpleSnackbar
         open={exercisesErrorSnackbar}
         autoHideDuration={5000}
         handleClose={handleExercisesEditedSnackbarClose}
-        message="There was an error reordering exercises" />
+        message="There was an error reordering exercises"
+      />
     </div>
   );
 };

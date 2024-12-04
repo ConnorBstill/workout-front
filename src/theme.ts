@@ -12,6 +12,8 @@ import {
   ERROR_COLOR,
 } from './colors';
 
+const rootElement = document.getElementById('root');
+
 const theme = createTheme({
   cssVariables: true,
   palette: {
@@ -46,6 +48,11 @@ const theme = createTheme({
           // borderRadius: "100px",
           boxShadow: '5px 5px 5px 0px rgba(0,0,0,0.2)',
         },
+      },
+    },
+    MuiDialog: {
+      defaultProps: {
+        container: rootElement,
       },
     },
   },

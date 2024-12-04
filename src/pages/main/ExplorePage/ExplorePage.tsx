@@ -8,7 +8,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 
 import { Table, SelectInput } from '../../../components/common';
 
-import { MuscleGroup, Equipment } from '../../../types/exercise.types';
+import { MuscleGroup, Equipment } from '../../../common/types/exercise.types';
 
 const ExplorePage = () => {
   const [selectedMuscleGroupId, setSelectedMuscleGroupId] = useState<string>('0');

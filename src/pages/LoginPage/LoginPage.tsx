@@ -9,7 +9,7 @@ import { authenticateUser } from '../../api-services/auth-service';
 import { setJwt, setRefresh } from '../../api-services/jwt-service';
 
 const LoginPage = () => {
-  const mutation = useMutation({
+  const authMutation = useMutation({
     mutationFn: authenticateUser,
     onSuccess: (res) => {
       const {
@@ -31,7 +31,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    mutation.mutate({ email, password });
+    authMutation.mutate({ email, password });
   };
 
   return (

@@ -12,6 +12,8 @@ const TextInput = ({
   type,
   multiline,
   minRows,
+  margin,
+  fullWidth,
 }: TextFieldProps) => {
   return (
     <TextField
@@ -25,6 +27,8 @@ const TextInput = ({
       id={id}
       color={color}
       type={type}
+      margin={margin}
+      fullWidth={fullWidth}
       sx={{
         '.MuiOutlinedInput-notchedOutline': { borderColor: TEXT_PRIMARY_DIM_COLOR },
       }}
